@@ -11,8 +11,12 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('registration');
 });
+*/
+Auth::routes();
+Route::get('/sign-up','Auth\RegisterController@showRegistrationForm');
+Route::get('/','Auth\LoginController@showLoginForm');
 
-Route::post('/registration-form','RegistrationController@register');
+Route::post('/registration-submit','Auth\RegisterController@register');
