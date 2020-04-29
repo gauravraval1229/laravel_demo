@@ -3,7 +3,7 @@
 .firstLetterCapital{
   text-transform: capitalize;
 }
-.nvalid-feedback{
+.error{
     color:red;
 }
 </style>
@@ -15,18 +15,16 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    {{ Form::open(array("url" => "registration-submit", "method" => "post")) }}
+                    {{ Form::open(array("url" => "registration-submit", "method" => "post", "enctype" => "multipart/form-data")) }}
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ Form::label('username') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ Form::label('name') }}</label>
 
                             <div class="col-md-6">
-                                {{ Form::text('username',null, ['class' => 'form-control']) }}
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                {{ Form::text('name',null, ['class' => 'form-control']) }}
+                                @error('name')
+                                    <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -37,9 +35,7 @@
                             <div class="col-md-6">
                                 {{ Form::email('email',null, ['class' => 'form-control']) }}
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -51,9 +47,19 @@
                                 {{ Form::password('password',['class' => 'form-control']) }}
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ Form::label('Confirm Password') }}</label>
+
+                            <div class="col-md-6">
+                                {{ Form::password('confirm_password',['class' => 'form-control']) }}
+
+                                @error('confirm_password')
+                                    <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -66,9 +72,7 @@
                                 {{ Form::radio('gender', 'female') }}female
 
                                 @error('gender')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -87,15 +91,13 @@
                                             $checked = true;
                                         }
 
-                                        echo Form::checkbox('designation', $designations->id, $checked);
+                                        echo Form::checkbox('designation[]', $designations->id, $checked);
                                         echo trim($designations->designation_name);
                                         $i++;
                                     }
                                 ?>
                                 @error('designation')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -107,9 +109,7 @@
                                 {{ Form::select('country', array('' => 'Select Country', 'india' => 'India', 'usa' => 'USA'),null,['class' => 'form-control']) }}
 
                                 @error('country')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -121,9 +121,7 @@
                                 {{ Form::file('profileImage',['class' => 'form-control']) }}
 
                                 @error('profileImage')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>

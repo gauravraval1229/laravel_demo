@@ -14,7 +14,7 @@ yarn-error.log
 
 .env
 vendor/
-public/uploads/
+public/uploads/*
 file/
 /storage/framework/views
 /storage/framework/sessions
