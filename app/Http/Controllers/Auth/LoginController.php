@@ -58,7 +58,7 @@ class LoginController extends Controller
         if(auth()->attempt(array($fieldType => $input['login'], 'password' => $input['password'] , 'is_deleted'=>'0'))){
             $role = Auth::user()->role;
             if($role == 'admin') {
-                return redirect('/admin-dashboard');
+                return redirect('/admin/admin-dashboard');
             }
             else if($role == 'user') {
                 return redirect('/dashboard');

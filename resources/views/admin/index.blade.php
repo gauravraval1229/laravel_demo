@@ -52,8 +52,8 @@
                     <td><?php echo ucfirst($userDetails[$key]->name); ?></td>
                     <td><?php echo $userDetails[$key]->email; ?></td>
                     <td><?php echo $status; ?></td>
-                    <td><a href ="{{ url('edit-user')}}\{{ $userId }}">Edit</a></td>
-                    <td><a href ="{{ url('delete-user')}}\{{ $userId }}">Edit</a></td>
+                    <td><a href ="{{ url('admin/edit-user')}}\{{ $userId }}">Edit</a></td>
+                    <td><a href ="{{ url('admin/delete-user')}}\{{ $userId }}">Delete</a></td>
                   </tr>
               <?php } } ?>
             </tbody>

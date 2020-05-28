@@ -47,7 +47,7 @@
                  @endif
                 @endforeach
 
-                {{ Form::open(array("url" => "update-user", "method" => "post", "enctype" => "multipart/form-data")) }}
+                {{ Form::open(array("url" => "admin/update-user", "method" => "post", "enctype" => "multipart/form-data")) }}
                 @csrf 
 
                   {{ Form::hidden('userId',$userDetails->id) }}

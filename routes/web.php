@@ -18,17 +18,19 @@ Route::post('/registration-submit','Auth\RegisterController@register');
 // Login
 Route::any('/','Auth\LoginController@showLoginForm');
 
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+	Route::get('/admin-dashboard', 'AdminController@index');
+	Route::get('/edit-user/{id}','AdminController@editUser');
+	Route::post('/update-user','AdminController@updateUser');
+	Route::get('/delete-user/{id}','AdminController@deleteUser');
+});
 // Admin
-Route::get('/admin-dashboard', 'AdminController@index');
+/*Route::get('/admin-dashboard', 'AdminController@index');
 Route::get('/edit-user/{id}','AdminController@editUser');
 Route::post('/update-user','AdminController@updateUser');
-Route::get('/delete-user/{id}','AdminController@deleteUser');
+Route::get('/delete-user/{id}','AdminController@deleteUser');*/
 
 // User
 Route::get('/dashboard','UserController@index');
 Route::get('/edit-profile','UserController@editProfile');
 Route::post('/update-profile','UserController@updateProfile');
-
-Route::fallback(function () {
-    return "Sorry page not found.";
-});

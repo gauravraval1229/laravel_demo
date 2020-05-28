@@ -15,7 +15,9 @@ class AdminController extends Controller
 {
     public function __construct() {
 
-        $this->middleware('auth');
+        if (Auth::check() == false) {
+            return redirect('/');
+        }
     }
 
     public function index() {
@@ -130,11 +132,11 @@ class AdminController extends Controller
 
                 $this->updateAllData($userId,$request->input('gender'),$request->input('country'),$request->input('designation'),$newName);
                 $request->session()->flash('success', 'Data updated successfully');
-                return redirect('/dashboard');
+                return redirect('/admin-dashboard/dashboard');
             }
             else {
                 $request->session()->flash('danger', 'Data updated successfully');
-                return redirect('/dashboard');
+                return redirect('/admin-dashboard/dashboard');
             }
         }
         else {
@@ -142,7 +144,7 @@ class AdminController extends Controller
             // function for update data
             $this->updateAllData($userId,$request->input('gender'),$request->input('country'),$request->input('designation'),$oldImageName);
             $request->session()->flash('success', 'Data updated successfully');
-            return redirect('/dashboard');
+            return redirect('/admin-dashboard/dashboard');
         }
     }
 
@@ -205,6 +207,6 @@ class AdminController extends Controller
         
         User::where('id',$userId)->update(['is_deleted'=>'1']);
         $request->session()->flash('success', 'Data deleted successfully');
-        return redirect('/dashboard');
+        return redirect('/admin-dashboard/dashboard');
     }
 }

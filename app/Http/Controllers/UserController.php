@@ -15,7 +15,9 @@ class UserController extends Controller
 {
     public function __construct() {
 
-        $this->middleware('auth');
+        if (Auth::check() == false) {
+            return redirect('/');
+        }
     }
 
     public function index() {
