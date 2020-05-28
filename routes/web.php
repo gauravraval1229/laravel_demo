@@ -28,3 +28,7 @@ Route::get('/delete-user/{id}','AdminController@deleteUser');
 Route::get('/dashboard','UserController@index');
 Route::get('/edit-profile','UserController@editProfile');
 Route::post('/update-profile','UserController@updateProfile');
+
+Route::fallback(function () {
+    return "Sorry page not found.";
+});
