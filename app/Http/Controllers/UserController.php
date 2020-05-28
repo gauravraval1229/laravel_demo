@@ -60,7 +60,7 @@ class UserController extends Controller
 
             $designationMeta = $userDetail->designationMeta;
 
-            foreach (json_decode($designationMeta) as $key => $value) {
+            foreach (json_decode($designationMeta) as $key => $value) { // get designation name
                 json_decode($userDetail->designationMeta[$key]->designation);
             }
             
