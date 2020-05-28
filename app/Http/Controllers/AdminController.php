@@ -13,16 +13,10 @@ use Session;
 
 class AdminController extends Controller
 {
-    /*public function __construct() {
+    public function __construct() {
 
-        // if (Auth::check() == false) {
-        //     return view('index');
-        // }
-
-        // flush session using key
-        Session::forget('error');
-        Session::forget('success');
-    }*/
+        $this->middleware('auth');
+    }
 
     public function index() {
 
@@ -114,6 +108,7 @@ class AdminController extends Controller
 
             $this->validate($request,$rules,$messages);
 
+            // create user dir if not exist
             $path1 = config('constants.publicProfile').'/'.$userId;
             if(!File::isDirectory($path1)){
                 File::makeDirectory($path1, 0755, true, true);
@@ -123,7 +118,7 @@ class AdminController extends Controller
 
             $imageLocation = config('constants.publicProfile').'/'.$userId.'/'.$oldImageName;
 
-            if(File::exists($imageLocation)) { //image exist in folder
+            if(File::exists($imageLocation)) { //image exist in folder so delete old image
                 File::delete($imageLocation);
             }
 

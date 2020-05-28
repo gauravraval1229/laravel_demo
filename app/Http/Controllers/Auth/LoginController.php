@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -30,7 +31,7 @@ class LoginController extends Controller
      */
     //protected $redirectTo = RouteServiceProvider::HOME;
 
-    protected $redirectTo = '/dashboard';
+    //protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -55,7 +56,16 @@ class LoginController extends Controller
   
         $fieldType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
         if(auth()->attempt(array($fieldType => $input['login'], 'password' => $input['password'] , 'is_deleted'=>'0'))){
-            return redirect('/dashboard');
+            $role = Auth::user()->role;
+            if($role == 'admin') {
+                return redirect('/admin-dashboard');
+            }
+            else if($role == 'user') {
+                return redirect('/dashboard');
+            }
+            else {
+                return redirect('/');
+            }
         }
         else {
             $request->session()->flash('danger', 'Invalid credentials or you are blocked.');

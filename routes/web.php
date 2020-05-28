@@ -13,11 +13,13 @@
 
 Auth::routes();
 Route::get('/sign-up','Auth\RegisterController@showRegistrationForm');
-Route::any('/','Auth\LoginController@showLoginForm');
-/*Route::get('/dashboard', 'AdminController@index');*/
 Route::post('/registration-submit','Auth\RegisterController@register');
 
+// Login
+Route::any('/','Auth\LoginController@showLoginForm');
+
 // Admin
+Route::get('/admin-dashboard', 'AdminController@index');
 Route::get('/edit-user/{id}','AdminController@editUser');
 Route::post('/update-user','AdminController@updateUser');
 Route::get('/delete-user/{id}','AdminController@deleteUser');
