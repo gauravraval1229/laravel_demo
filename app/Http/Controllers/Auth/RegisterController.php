@@ -65,16 +65,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // 1 = admin
-        // 2 = user
+        $j = 0;
+        while ($j == 0) {
+            $name = $this->generateRandomString();
+            $userName = User::select('name')->where('name',$name)->first();
+            $userName = json_decode($userName);
+
+            if(isset($userName->name)){
+                $j = 0;
+            }
+            else {
+                $j = 1;
+            }
+        }
+        $data['name'] = $name;
+        
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'gender' => $data['gender'],
             'country' => $data['country'],
-            'profile_image'=>$data['profileImage'],
-            'is_admin'=>'2',
         ]);
 
         for($i=0;$i<sizeof($data['designation']);$i++){
@@ -84,5 +95,11 @@ class RegisterController extends Controller
             Usermeta::create($insertData);
         }
         return $user;
+    }
+
+    public function generateRandomString($length = 6) {
+
+        $chars = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        return substr(str_shuffle($chars),0,$length);
     }
 }

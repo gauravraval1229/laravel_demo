@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Usermeta;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin', 'gender', 'country', 'profile_image',
+        'name', 'email', 'password', 'role', 'gender', 'country', 'profile_image',
     ];
 
     /**
@@ -36,4 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /*public function designationData() {
+        return $this->hasMany(Usermeta::class,'user_id','id');
+    }*/
+
+    public function designationMeta(){
+        return $this->hasMany(Usermeta::class,'user_id','id')->select('id','user_id','designation_id','status');  
+    }
 }

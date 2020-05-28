@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Session;
 
 class LoginController extends Controller
 {
@@ -26,7 +28,9 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
+
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -36,5 +40,26 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request) {
+
+        $input = $request->all();
+  
+        $this->validate($request, [
+            'login' => 'required',
+            'password' => 'required',
+        ]);
+
+        Session::forget('danger');
+  
+        $fieldType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+        if(auth()->attempt(array($fieldType => $input['login'], 'password' => $input['password'] , 'is_deleted'=>'0'))){
+            return redirect('/dashboard');
+        }
+        else {
+            $request->session()->flash('danger', 'Invalid credentials or you are blocked.');
+            return redirect('/');
+        }
     }
 }

@@ -19,17 +19,6 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ Form::label('name') }}</label>
-
-                            <div class="col-md-6">
-                                {{ Form::text('name',null, ['class' => 'form-control']) }}
-                                @error('name')
-                                    <p class="error">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ Form::label('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
@@ -92,7 +81,7 @@
                                         }
 
                                         echo Form::checkbox('designation[]', $designations->id, $checked);
-                                        echo trim($designations->designation_name);
+                                        echo " ".ucfirst(trim($designations->designation_name))." ";
                                         $i++;
                                     }
                                 ?>
@@ -109,18 +98,6 @@
                                 {{ Form::select('country', array('' => 'Select Country', 'india' => 'India', 'usa' => 'USA'),null,['class' => 'form-control']) }}
 
                                 @error('country')
-                                    <p class="error">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ Form::label('Profile Image') }}</label>
-
-                            <div class="col-md-6">
-                                {{ Form::file('profileImage',['class' => 'form-control']) }}
-
-                                @error('profileImage')
                                     <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>

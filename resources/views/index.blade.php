@@ -19,21 +19,41 @@
 
 <div class="container-fluid">
  
-    <!-- Info boxes start -->
-      <div class="row">
-        <div class="col-12 col-sm-3 col-md-3"></div>
-        <div class="col-12 col-sm-3 col-md-3">
-          <a href="#">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fa fa-gear"></i></span>
-              <div class="info-box-content">
-              </div>
-            </div>
-          </a>
+  <!-- Info boxes start -->
+    <div class="row">
+      <form>
+
+        <div class="row">
+          <div class="col-md-4">
+            UserName:
+          </div>
+          <div class="col-md-8">
+            
+          </div>
         </div>
-        <div class="col-12 col-sm-3 col-md-3"></div>
-      </div>
-    <!-- Info boxes end -->
+
+        <div class="row">
+          <div class="col-md-4">
+            UserName:
+          </div>
+          <div class="col-md-8">
+            
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            UserName:
+          </div>
+          <div class="col-md-8">
+            
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+  <!-- Info boxes end -->
 
 </div><!--/. container-fluid -->
 
