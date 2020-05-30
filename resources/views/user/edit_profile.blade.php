@@ -132,10 +132,10 @@
                   <div class="form-group">
                     <label for="exampleInputPassword1">{{ Form::label('Profile Image') }}</label><br/>
                     <?php 
-                      $displayImage = config('constants.srcDefaultImage');
+                      $displayImage = asset('profileImage/defaultUserImage.png');
 
                       if(file_exists(config('constants.publicProfile').'/'.$userDetails->id.'/'.$userDetails->profile_image)) { //image exist in folder
-                        $displayImage = config('constants.srcProfile').'/'.$userDetails->id.'/'.$userDetails->profile_image;
+                        $displayImage = asset('profileImage').'/'.$userDetails->id.'/'.$userDetails->profile_image;
                       }
                     ?>
                     <div class="text-center">

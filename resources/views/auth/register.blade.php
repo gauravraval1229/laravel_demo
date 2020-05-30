@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="{{ asset('assets/front_end/css/bootstrap.min.css') }}" />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <style type="text/css">
 .firstLetterCapital{
   text-transform: capitalize;
@@ -7,6 +8,7 @@
     color:red;
 }
 </style>
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -57,8 +59,8 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ Form::label('Gender') }}</label>
 
                             <div class="col-md-6 firstLetterCapital">
-                                {{ Form::radio('gender', 'male', true) }}male
-                                {{ Form::radio('gender', 'female') }}female
+                                {{ Form::radio('gender', 'male', true) }} male
+                                {{ Form::radio('gender', 'female') }} female
 
                                 @error('gender')
                                     <p class="error">{{ $message }}</p>
@@ -95,9 +97,21 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ Form::label('Select Country') }}</label>
 
                             <div class="col-md-6">
-                                {{ Form::select('country', array('' => 'Select Country', 'india' => 'India', 'usa' => 'USA'),null,['class' => 'form-control']) }}
+                                {{ Form::select('country', array('' => 'Select Country', 'india' => 'India', 'usa' => 'USA'),null,['class' => 'form-control','id'=>'country']) }}
 
                                 @error('country')
+                                    <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ Form::label('Select State') }}</label>
+
+                            <div class="col-md-6">
+                                {{ Form::select('country', array('' => 'Select State'),null,['class' => 'form-control','id'=>'state']) }}
+
+                                @error('state')
                                     <p class="error">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -115,7 +129,37 @@
     </div>
 </div>
 
+<!-- practice purpose -->
+<script type="text/javascript">
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
-<script type="text/javascript" src="{{ asset('assets/front_end/js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/front_end/js/popper.min.js') }}"></script>
+$("#country").on('change',function(){
+    var country = $("#country").val();
+
+    // Remove previous selected data
+    $('#state').empty().append('<option value="">Select State</option>');
+
+    $.ajax({
+        type: "post",
+        url: "/get-state",
+        data: {"country":country},
+        success:function(data){
+            var dataArr = data.split(',');
+
+            if(dataArr[0] == "success") {
+                for (i = 1; i < dataArr.length; i++) {
+                    var stateName = dataArr[i].charAt(0).toUpperCase() + dataArr[i].substring(1);
+                    $("#state").append("<option value='"+dataArr[i]+"'>"+stateName+"</option>");
+                }
+            }
+        }
+    });
+});
+</script>
+<!-- practice purpose -->
+
 <script type="text/javascript" src="{{ asset('assets/front_end/js/bootstrap.min.js') }}"></script>
